@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 // Для api
-Route::resource('entity', EntityController::class);
+Route::resource('api/pages', App\Http\Controllers\Api\PageController::class);
 
 
 // Для Voyager

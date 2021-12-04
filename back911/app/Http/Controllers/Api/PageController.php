@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Entity;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class EntityController extends Controller
+use TCG\Voyager\Models\Page;
+
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,18 +16,7 @@ class EntityController extends Controller
      */
     public function index()
     {
-        //dd(Entity::all());
-        return Entity::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Page::all();
     }
 
     /**
@@ -42,21 +33,10 @@ class EntityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Entity  $entity
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Entity $entity)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Entity  $entity
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Entity $entity)
+    public function show($id)
     {
         //
     }
@@ -65,10 +45,10 @@ class EntityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Entity  $entity
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entity $entity)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +56,10 @@ class EntityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Entity  $entity
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entity $entity)
+    public function destroy($id)
     {
         //
     }

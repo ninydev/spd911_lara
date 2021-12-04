@@ -4,9 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, Link } from "react-router-dom";
 
 // Мои компоненты
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+import Home from "../design/Home";
+import About from "../design/About";
+import Contact from "../design/Contact";
+import PagesCollection from "./pages/Pages.Collection";
 
 
 function Application() {
@@ -17,12 +18,14 @@ function Application() {
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
                     <Link to="/contact">Contact</Link>
+                    <Link to="/pages">All Pages</Link>
                 </nav>
 
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/pages" element={<PagesCollection />} />
                 </Routes>
             </div>
         </BrowserRouter>
