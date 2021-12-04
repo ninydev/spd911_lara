@@ -27,7 +27,15 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        $page = Page::create($request->all());
+//        Page::create($request->all());
+//        return $page;
+
+//        $page = new Page();
+//        $page->title = $request->title;
+//        $page->save();
+
+        return Page::all();
     }
 
     /**

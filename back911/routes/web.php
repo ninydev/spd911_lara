@@ -44,5 +44,9 @@ Auth::routes();
 // Передать все остальные маршруты в React
 Route::get('/{path?}', function () {
     return view('react');
-});
+})->where('path', '.*');
+// Передать все остальные маршруты в React
+//Route::get('/{path?}/{any}', function () {
+//    return view('react');
+//});
 

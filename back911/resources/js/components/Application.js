@@ -8,6 +8,7 @@ import Home from "../design/Home";
 import About from "../design/About";
 import Contact from "../design/Contact";
 import PagesCollection from "./pages/Pages.Collection";
+import PagesForm from "./pages/Pages.Form";
 
 
 function Application() {
@@ -26,6 +27,7 @@ function Application() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/pages" element={<PagesCollection />} />
+                    <Route path="/pages/create" element={<PagesForm />} />
                 </Routes>
             </div>
         </BrowserRouter>
