@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 // Для api
 Route::resource('api/pages', App\Http\Controllers\Api\PageController::class);
+Route::get('api/pages/checkSlug/{slug}', 'App\Http\Controllers\Api\PageController@checkSlug')->name("pages.checkSlug");
 
 
 // Для Voyager

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 
 export default function PagesForm(props) {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch,setError, formState: { errors } } = useForm();
 
     const onSubmit = data => {
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -25,7 +25,7 @@ export default function PagesForm(props) {
             .catch(err=> {console.log(err)})
     };
 
-    console.log(watch("example"));
+    // console.log(watch("example"));
 
     /*
     [{
@@ -53,14 +53,58 @@ export default function PagesForm(props) {
 
      */
 
+    //errors.slug = false;
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
+            <input defaultValue="0" {...register("author_id")} /><br/>
+            <input defaultValue="ACTIVE" {...register("status")} /><br/>
+
+            <hr/>
 
             <input defaultValue="title" {...register("title")} /><br/>
             <input defaultValue="excerpt" {...register("excerpt")} /><br/>
             <input defaultValue="body" {...register("body")} /><br/>
 
-            <input defaultValue="slug" {...register("slug")} /><br/>
+            <input defaultValue="slug" {...register("slug",
+                {
+                        required: true,
+                        onChange: (e) => {
+                            //console.log(e.target.name);
+                            console.log(e.target.value);
+
+                            if (e.target.value.label < 5) {
+                                setError("slug", {
+                                    type: "manual",
+                                    message: "Slug is short!",
+                                });
+                                return;
+                            }
+
+                            fetch("http://localhost:8000/api/pages/checkSlug/" + e.target.value)
+                                .then(res=> {return res.text()})
+                                .then(res=> {
+                                    console.log("С сервера пришло: " + res);
+                                    if (res) {
+                                        console.log("такой есть");
+                                        setError("slug", {
+                                            type: "manual",
+                                            message: "Slug is bad!",
+                                        });
+                                    } else {
+                                        console.log("такого нет");
+                                        setError("slug", null);
+                                        // delete errors.slug;
+                                    }
+                                    })
+                                .catch(err=> {console.log(err);})
+
+
+                        }
+                }
+            )}/>
+            {errors.slug && <span>{errors.slug.message}</span>}
+            <br/>
             <input defaultValue="meta_description" {...register("meta_description")} /><br/>
             <input defaultValue="meta_keywords" {...register("meta_keywords")} /><br/>
             <input defaultValue="status" {...register("status")} /><br/>

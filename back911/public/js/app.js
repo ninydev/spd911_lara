@@ -2321,6 +2321,7 @@ function PagesForm(props) {
       register = _useForm.register,
       handleSubmit = _useForm.handleSubmit,
       watch = _useForm.watch,
+      setError = _useForm.setError,
       errors = _useForm.formState.errors;
 
   var onSubmit = function onSubmit(data) {
@@ -2339,9 +2340,8 @@ function PagesForm(props) {
     }).then()["catch"](function (err) {
       console.log(err);
     });
-  };
+  }; // console.log(watch("example"));
 
-  console.log(watch("example"));
   /*
   [{
   "id":1,
@@ -2363,10 +2363,16 @@ function PagesForm(props) {
   }]
            <input defaultValue="image" {...register("image")} /><br/>
     */
+  //errors.slug = false;
+
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
     onSubmit: handleSubmit(onSubmit),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
+      defaultValue: "0"
+    }, register("author_id"))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
+      defaultValue: "ACTIVE"
+    }, register("status"))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
       defaultValue: "title"
     }, register("title"))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
       defaultValue: "excerpt"
@@ -2374,7 +2380,42 @@ function PagesForm(props) {
       defaultValue: "body"
     }, register("body"))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
       defaultValue: "slug"
-    }, register("slug"))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
+    }, register("slug", {
+      required: true,
+      onChange: function onChange(e) {
+        //console.log(e.target.name);
+        console.log(e.target.value);
+
+        if (e.target.value.label < 5) {
+          setError("slug", {
+            type: "manual",
+            message: "Slug is short!"
+          });
+          return;
+        }
+
+        fetch("http://localhost:8000/api/pages/checkSlug/" + e.target.value).then(function (res) {
+          return res.text();
+        }).then(function (res) {
+          console.log("С сервера пришло: " + res);
+
+          if (res) {
+            console.log("такой есть");
+            setError("slug", {
+              type: "manual",
+              message: "Slug is bad!"
+            });
+          } else {
+            console.log("такого нет");
+            setError("slug", null); // delete errors.slug;
+          }
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+    }))), errors.slug && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+      children: errors.slug.message
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
       defaultValue: "meta_description"
     }, register("meta_description"))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", _objectSpread({
       defaultValue: "meta_keywords"

@@ -9,6 +9,16 @@ use TCG\Voyager\Models\Page;
 
 class PageController extends Controller
 {
+    public function checkSlug($slug)
+    {
+        if(Page::where('slug',$slug)->exists()){
+            return true;
+        } else {
+            return false;
+        }
+        //return $slug;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,14 +37,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-//        $page = Page::create($request->all());
-//        Page::create($request->all());
-//        return $page;
-
-//        $page = new Page();
-//        $page->title = $request->title;
-//        $page->save();
-
+        Page::create($request->all());
         return Page::all();
     }
 
